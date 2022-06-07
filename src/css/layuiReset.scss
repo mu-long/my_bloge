@@ -1,0 +1,33 @@
+.layui-container {
+  margin-top: 60px;
+  padding: 20px 30px;
+  background: #fff;
+  box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2);
+
+  .layui-tab-title {
+    display: flex;
+    justify-content: flex-end;
+  }
+
+  .layui-form {
+    margin-top: 20px;
+
+    .layui-word-aux {
+      color: #ff5722 !important;
+      font-weight: 600;
+    }
+
+    .svg {
+      cursor: pointer;
+      position: relative;
+      top: -8px;
+    }
+
+    .forget_pwd {
+      margin-left: 10px;
+      &:hover {
+        color: var(--themeColor);
+      }
+    }
+  }
+}

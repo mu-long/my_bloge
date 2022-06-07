@@ -1,5 +1,7 @@
 [*.{js,jsx,ts,tsx,vue}]
 indent_style = space
 indent_size = 2
+# 修剪尾随的空格
 trim_trailing_whitespace = true
+# 最后插入换行符
 insert_final_newline = true
