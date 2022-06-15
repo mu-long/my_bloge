@@ -1,12 +1,21 @@
 <template>
-  <div class="home">home</div>
+  <div class="home">
+    <!-- 面板 -->
+    <Panel />
+    <router-view></router-view>
+  </div>
 </template>
 
 <script>
-export default {
+import Panel from '../components/Panel.vue'
 
+export default {
+  name: 'Home',
+  components: {
+    Panel // 面板
+  }
 }
 </script>
 
-<style>
+<style lang="scss" scoped>
 </style>

@@ -10,7 +10,9 @@
   "dependencies": {
     "axios": "^0.21.1",
     "core-js": "^3.6.5",
+    "moment": "^2.29.3",
     "nprogress": "^0.2.0",
+    "qs": "^6.10.5",
     "uuid": "^8.3.2",
     "vee-validate": "^3.4.9",
     "vue": "^2.6.11",

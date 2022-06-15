@@ -23,6 +23,7 @@ export default {
 </script>
 
 <style lang="scss">
+@import './iconfont/iconfont.css';
 @import './css/reset.css';
 // 引入 layui.css
 @import './assets/layui/css/layui.css';

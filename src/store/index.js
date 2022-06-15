@@ -6,7 +6,9 @@ Vue.use(Vuex)
 export default new Vuex.Store({
   // 状态
   state: {
-    sid: ''
+    sid: '', // 图片验证码唯一标识
+    token: '', // 令牌
+    isLogin: false // 是否登录
   },
 
   // 变化 (提交 mutation 是更改状态的唯一方法)

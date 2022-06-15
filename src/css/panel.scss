@@ -1,0 +1,245 @@
+/* 面板 */
+.fly-panel {
+  margin-bottom: 15px;
+  padding-bottom: 15px;
+  border-radius: 2px;
+  background-color: #fff;
+  box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+}
+
+.no_more {
+  padding-bottom: 20px;
+  color: #7b7b7b;
+}
+
+a:hover {
+  color: #009688 !important;
+  transition: all 0.3s !important;
+}
+
+.layui-this {
+  // &::after {
+  //   position: absolute;
+  //   bottom: 13px;
+  //   left: 8px;
+  //   z-index: 0;
+  //   width: 50px;
+  //   height: 22px;
+  //   border: 1px solid #5fb878;
+  //   border-radius: 2px;
+  // }
+  & > a {
+    color: #5fb878;
+  }
+}
+
+.fly-panel[pad20] {
+  padding: 20px;
+}
+
+.fly-panel-title {
+  position: relative;
+  height: 50px;
+  line-height: 50px;
+  padding: 0 15px;
+  font-size: 16px;
+  color: #333;
+  border-bottom: 1px dotted #e9e9e9;
+  border-radius: 2px 2px 0 0;
+}
+
+.fly-panel-main {
+  padding: 10px 15px;
+}
+
+.fly-link {
+  color: #01aaed;
+}
+
+.fly-list-static {
+  padding: 0;
+  margin: 10px 15px;
+  border: 1px solid #999;
+  border-right: none;
+  border-bottom: none;
+
+  li {
+    width: 50%;
+    display: inline-block;
+    text-align: center;
+    padding: 8px;
+    border: 1px solid #999;
+    border-left: none;
+    border-top: none;
+
+    a {
+      display: block;
+      width: 100%;
+      height: 100%;
+      font-size: 16px;
+      color: #01aaed;
+      &:hover {
+        opacity: 0.8;
+      }
+    }
+  }
+}
+
+// 文字单行省略
+.fly-list li h2,
+.fly-list li h2 a,
+.fly-list-static li a,
+.fly-list-info {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.fly-filter {
+  a {
+    color: #333;
+  }
+
+  a.layui-this {
+    color: #5fb878;
+  }
+
+  .fly-mid {
+    display: inline-block;
+    height: 10px;
+    width: 1px;
+    margin: 0 8px;
+    vertical-align: middle;
+    background-color: #e2e2e2;
+  }
+}
+
+.fly-filter-right {
+  position: absolute;
+  right: 10px;
+  top: 0;
+}
+
+.more {
+  text-align: center;
+
+  a {
+    display: inline-block;
+    line-height: 36px;
+    padding: 0 20px;
+    margin-bottom: 15px;
+    border: 1px solid #009e94;
+  }
+}
+
+.fly-list li {
+  position: relative;
+  min-height: 45px;
+  line-height: 22px;
+  padding: 15px 15px 15px 75px;
+  border-bottom: 1px dotted #e2e2e2;
+  margin-bottom: 20px;
+
+  .fly-avatar {
+    position: absolute;
+    left: 15px;
+    top: 15px;
+
+    img {
+      display: block;
+      width: 45px;
+      height: 45px;
+      margin: 0;
+      border-radius: 2px;
+    }
+  }
+
+  a {
+    color: #333;
+    text-decoration: none;
+  }
+
+  h2 {
+    height: 26px;
+    font-size: 0;
+
+    a {
+      display: inline-block;
+      max-width: 80%;
+      padding-right: 10px;
+      font-size: 16px;
+    }
+
+    .layui-badge {
+      top: -2px;
+      line-height: 16px;
+      padding: 0 5px;
+      margin-right: 10px;
+      font-size: 12px;
+      border: 1px solid #5fb878;
+      background: none;
+      color: #5fb878;
+    }
+  }
+
+  .fly-list-info {
+    position: relative;
+    font-size: 13px;
+    color: #999;
+
+    & > * {
+      padding-right: 15px;
+    }
+
+    a cite {
+      font-style: normal;
+      cursor: pointer;
+      &:hover {
+        color: #009688;
+        transition: all 0.3s;
+      }
+    }
+
+    a[link] {
+      color: #999;
+    }
+
+    .iconfont {
+      margin: 0 5px;
+      color: #ffb800;
+      font-size: 18px;
+      vertical-align: bottom;
+    }
+
+    .icon-shoucang1 {
+      margin-right: unset;
+    }
+
+    .fly-badge-accept {
+      height: 18px;
+      line-height: 18px;
+      padding: 0 5px !important;
+      background-color: #5fb878;
+      border-radius: 2px;
+    }
+
+    .fly-list-nums {
+      position: absolute;
+      right: 0;
+      top: 0;
+      padding-right: 0 !important;
+    }
+  }
+
+  // 标签
+  .fly-list-badge {
+    position: absolute;
+    right: 15px;
+    top: 15px;
+    font-size: 0;
+
+    .layui-badge {
+      margin-right: 5px;
+    }
+  }
+}
