@@ -7,27 +7,12 @@
   box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
 }
 
-.no_more {
-  padding-bottom: 20px;
-  color: #7b7b7b;
-}
-
 a:hover {
   color: #009688 !important;
   transition: all 0.3s !important;
 }
 
 .layui-this {
-  // &::after {
-  //   position: absolute;
-  //   bottom: 13px;
-  //   left: 8px;
-  //   z-index: 0;
-  //   width: 50px;
-  //   height: 22px;
-  //   border: 1px solid #5fb878;
-  //   border-radius: 2px;
-  // }
   & > a {
     color: #5fb878;
   }
@@ -130,6 +115,11 @@ a:hover {
     margin-bottom: 15px;
     border: 1px solid #009e94;
   }
+}
+
+.no_more {
+  padding-bottom: 20px;
+  color: #7b7b7b;
 }
 
 .fly-list li {

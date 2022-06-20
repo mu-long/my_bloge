@@ -41,7 +41,8 @@ body {
 
 /* color: var(--themeColor); */
 :root {
-  --themeColor: #1e90ff; /* 主题颜色 */
+  --themeColor: #5fb878; /* 主题颜色 */
+  /* --themeColor: #1e90ff; */
   --minorColor: #e3e3e3; /* 次要颜色 */
   --bgColor: #393d49;
   --textColor-light: #e7e9ec; /* 高亮颜色 */
@@ -51,6 +52,7 @@ body {
   --textcolor-dark-gray: #727272; /* 深灰 */
   --textcolor-light-gray: #c6c6c6; /* 浅灰 */
   --maskColor: rgba(0, 0, 0, 0.6); /* 遮罩层 */
+  --minHeight: 600px; /* 最小高度 */
 }
 
 .layui-tab-title {

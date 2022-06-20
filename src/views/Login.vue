@@ -140,7 +140,6 @@
 <script>
 import { getCaptcha, login } from '@/api/login'
 import { getSid } from '../api/getSid'
-// import Alert from '../components/modules/alert/Alert.vue'
 
 export default {
   name: 'login', // 登录
@@ -154,26 +153,10 @@ export default {
       svgText: '',
       code: '',
       sid: '' // 验证码唯一标识
-      // alertMsg: '我是标题1',
-      // alertShow: true
     }
   },
-  components: {
-    // Alert
-    // ValidationProvider
-    // ValidationObserver
-  },
+  components: {},
   mounted () {
-    /* let sid = ''
-    if (localStorage.getItem('sid')) {
-      sid = localStorage.getItem('sid')
-    } else {
-      // 生成唯一标识符uuid
-      sid = uuidv4()
-      localStorage.setItem('sid', sid)
-    }
-    // 在vuex中存储sid
-    this.$store.commit('setSid', sid) */
     const sid = getSid()
     this.sid = sid
     console.log('sid==>', sid)
@@ -209,15 +192,23 @@ export default {
       }).then(res => {
         console.log('login res==>', res)
         if (res.code === 200) {
+          // 保存用户信息到vuex
+          this.$store.commit('setUserInfo', res.data)
+          // 保存令牌
+          this.$store.commit('setToken', res.token)
+          // 保存登录标识
+          this.$store.commit('setIsLogin', true)
           this.email = ''
           this.password = ''
           this.code = ''
           // 重置表单
           requestAnimationFrame(() => {
-            this.$refs.observer_ref.reset()
+            if (this.$refs.observer_ref) {
+              this.$refs.observer_ref.reset()
+            }
           })
           // 跳转到首页
-          // this.$router.push('/home')
+          this.$router.push('/index')
         } else if (res.code === 401) {
           // 提示验证码错误
           this.$refs.code_ref.setErrors([res.msg])
@@ -235,6 +226,6 @@ export default {
 }
 </script>
 
-<style lang="scss" scope>
+<style lang="scss" scoped>
 @import '../css/layuiReset.scss';
 </style>

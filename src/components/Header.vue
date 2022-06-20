@@ -4,13 +4,8 @@
     <div class="header_box">
       <div class="logo">慕龍科技</div>
       <nav>
-        <!-- 汉堡伸缩 -->
-        <div class="burger">
-          <div class="line line1"></div>
-          <div class="line line2"></div>
-          <div class="line line3"></div>
-        </div>
-        <a href="#home">首页</a>
+        <!-- <a href="#/home">首页</a> -->
+        <router-link to="/">首页</router-link>
         <a href="#about_us">关于我们</a>
         <a href="#succeess_case">成功案例</a>
         <a href="#team_intro">团队介绍</a>
@@ -18,6 +13,82 @@
         <!-- 搜索 -->
         <i class="iconfont icon-ai219"></i>
       </nav>
+      <!-- 用户信息 -->
+      <ul
+        class="layui-nav fly-nav-user user"
+        lay-bar="disabled"
+      >
+        <!-- 未登入的状态 -->
+        <template v-if="!isShow">
+          <li class="layui-nav-item">
+            <router-link to="/login">登录</router-link>
+          </li>
+          <li class="layui-nav-item">
+            <router-link :to="{name:'logon'}">注册</router-link>
+          </li>
+          <!-- <span class="layui-nav-bar"></span> -->
+        </template>
+        <!-- 登入后的状态 -->
+        <template v-else>
+          <li class="layui-nav-item">
+            <a
+              href="javascript:;"
+              class="fly-nav-avatar"
+            >
+              <cite class="userName layui-hide-xs">{{ userInfo.username }}</cite>
+              <i
+                class="iconfont icon-vrenzhengguanli layui-hide-xs approve"
+                title="认证信息"
+              ></i>
+              <i
+                class="layui-badge fly-badge-vip layui-hide-xs"
+                v-if="userInfo.isVip !== 0"
+              >VIP</i>
+              <img
+                :src="userInfo.pic"
+                alt="头像"
+              >
+              <!-- <img src="https://tva1.sinaimg.cn/crop.0.0.118.118.180/5db11ff4gw1e77d3nqrv8j203b03cweg.jpg"> -->
+              <span class="layui-nav-more"></span>
+            </a>
+            <!-- 下拉菜单 -->
+            <dl class="layui-nav-child">
+              <dd>
+                <a href="user/set.html">
+                  <i class="iconfont icon-shezhi"></i>
+                  <span>基本设置</span>
+                </a>
+              </dd>
+              <dd>
+                <a href="user/message.html">
+                  <i
+                    class="iconfont icon-xiaoxi3"
+                    style="top: 4px;"
+                  ></i>
+                  <span>我的消息</span>
+                </a>
+              </dd>
+              <dd>
+                <router-link to="/center">
+                  <i class="iconfont icon-home"></i>
+                  <span>我的主页</span>
+                </router-link>
+              </dd>
+              <hr style="margin: 5px 0;">
+              <dd>
+                <a
+                  href="javascript:;"
+                  @click="logout()"
+                >
+                  <i class="iconfont icon-tuichu"></i>
+                  <span>退出</span>
+                </a>
+              </dd>
+            </dl>
+          </li>
+          <!-- <span class="layui-nav-bar"></span> -->
+        </template>
+      </ul>
       <!-- 汉堡伸缩 -->
       <div class="burger">
         <div class="line line1"></div>
@@ -30,24 +101,48 @@
 
 <script>
 export default {
-  name: 'Header'
+  name: 'Header',
+  computed: {
+    isShow () {
+      return this.$store.state.isLogin || false
+    },
+    userInfo () {
+      return this.$store.state.userInfo || {
+        userName: '',
+        pic: '',
+        isVip: 0
+      }
+    }
+  },
+  methods: {
+    logout () {
+      this.$confirm('确定要退出吗？', () => {
+        localStorage.clear()
+        this.$store.commit('setUserInfo', '')
+        this.$store.commit('setToken', '')
+        this.$store.commit('setIsLogin', false)
+        this.$router.push('/')
+      })
+    }
+  }
 }
 </script>
 
 <style lang="scss" scoped>
 @import '../css/reset.css';
+
 header {
-  height: 80px;
   .header_box {
     position: relative;
-    z-index: 999;
+    z-index: 99999;
     width: 100vw;
-    height: 80px;
+    min-height: 80px;
+    // line-height: 80px;
     padding: 0 40px;
     background: var(--bgColor);
-    display: grid;
-    grid-template-rows: 1fr;
-    grid-template-columns: 1fr 2fr;
+    display: grid; /* 显示方式 网格 */
+    grid-template-rows: 1fr; /* 网格模板行高 */
+    grid-template-columns: 1fr 3fr 1fr; /* 网格模板列宽 */
     align-items: center;
     color: var(--textColor-light);
 
@@ -81,7 +176,9 @@ header {
       justify-self: end;
 
       a {
-        margin: 0 24px;
+        display: inline-block;
+        // margin: 0 24px;
+        padding: 20px;
         color: var(--textColor-light);
       }
 
@@ -94,6 +191,86 @@ header {
       a:hover,
       i:hover {
         color: var(--themeColor);
+      }
+    }
+
+    .fly-nav-user {
+      justify-self: center;
+
+      .layui-nav-bar {
+        display: none !important;
+      }
+
+      a {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        padding: 0 10px;
+        font-size: 18px;
+        color: var(--textColor-light);
+        overflow: hidden;
+        &:hover {
+          color: var(--themeColor);
+        }
+
+        .fly-badge-vip {
+          margin: 0 5px;
+        }
+      }
+
+      .layui-this {
+        &:after {
+          display: none;
+        }
+      }
+
+      .fly-nav-avatar {
+        .layui-badge {
+          position: unset;
+        }
+        .userName {
+          font-size: 15px;
+        }
+        .approve {
+          margin-left: 5px;
+          vertical-align: middle;
+          font-size: 20px;
+          color: #ffb800;
+        }
+        img {
+          width: 36px;
+          height: 36px;
+          margin-left: 10px;
+          border-radius: 100%;
+        }
+        .layui-nav-more {
+          display: none !important;
+        }
+      }
+
+      .layui-nav-child {
+        left: auto;
+        right: 0;
+        width: 120px;
+        min-width: 0;
+
+        a {
+          display: block;
+          text-align: center;
+          font-weight: 600;
+          font-size: 18px;
+          color: #999;
+          &:hover {
+            color: var(--themeColor);
+          }
+
+          .iconfont {
+            margin-right: 5px;
+            vertical-align: middle;
+            font-weight: normal;
+            font-size: 20px;
+          }
+        }
       }
     }
 

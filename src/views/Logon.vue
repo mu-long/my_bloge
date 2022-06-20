@@ -260,6 +260,6 @@ export default {
 }
 </script>
 
-<style lang="sass" scoped>
-@import '../css/layuiReset.scss'
+<style lang="scss" scoped>
+@import '../css/layuiReset.scss';
 </style>

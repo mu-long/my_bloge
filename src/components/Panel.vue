@@ -28,7 +28,7 @@
       <div class="right layui-hide-xs">
         <span class="layui-icon layui-icon-search search"></span>
         <a
-          href="javascript:;"
+          href
           class="layui-btn"
         >发帖</a>
       </div>
@@ -120,14 +120,14 @@ export default {
   .panel {
     position: relative;
     z-index: 999;
-    min-height: 50px;
-    line-height: 50px;
     margin-bottom: 10px;
     border-radius: 2px;
     background: #fff;
     box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
 
     .layui-container {
+      min-height: 50px;
+      line-height: 50px;
       display: flex;
       justify-content: space-between;
       align-items: center;
@@ -162,6 +162,13 @@ export default {
       cursor: pointer;
       &:hover {
         color: var(--themeColor);
+      }
+    }
+
+    .layui-btn {
+      &:hover {
+        color: #fff !important;
+        opacity: 0.8;
       }
     }
   }
