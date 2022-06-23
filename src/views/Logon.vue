@@ -244,7 +244,7 @@ export default {
             this.$refs.observer_ref.reset()
           })
           // 跳转到登录页面
-          // this.$router.push('/login')
+          this.$router.push('/login')
         } else if (res.code === 401) {
           // 提示验证码错误
           this.$refs.code_ref.setErrors([res.msg.code])

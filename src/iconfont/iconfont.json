@@ -6,6 +6,41 @@
   "description": "",
   "glyphs": [
     {
+      "icon_id": "10833016",
+      "name": "browser-404",
+      "font_class": "browser-",
+      "unicode": "e606",
+      "unicode_decimal": 58886
+    },
+    {
+      "icon_id": "15168276",
+      "name": "404",
+      "font_class": "yepian",
+      "unicode": "e61d",
+      "unicode_decimal": 58909
+    },
+    {
+      "icon_id": "201557",
+      "name": "关闭",
+      "font_class": "guanbi",
+      "unicode": "e605",
+      "unicode_decimal": 58885
+    },
+    {
+      "icon_id": "2076367",
+      "name": "关闭小",
+      "font_class": "guanbixiao",
+      "unicode": "e8bd",
+      "unicode_decimal": 59581
+    },
+    {
+      "icon_id": "5387522",
+      "name": "关闭",
+      "font_class": "guanbi1",
+      "unicode": "eaf2",
+      "unicode_decimal": 60146
+    },
+    {
       "icon_id": "144706",
       "name": "密码",
       "font_class": "mima",

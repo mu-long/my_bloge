@@ -24,6 +24,8 @@ const UserMsg = () =>
   import(/* webpackChunkname: "user_msg" */ '../components/user/Msg.vue')
 const UserOthers = () =>
   import(/* webpackChunkname: "user_others" */ '../components/user/Others.vue')
+const NoFound = () =>
+  import(/* webpackChunkname: "404" */ '../views/NoFound.vue')
 const UserPosts = () =>
   import(/* webpackChunkname: "user_posts" */ '../components/user/Posts.vue')
 const MyPost = () =>
@@ -168,6 +170,15 @@ const routes = [
         component: UserOthers
       }
     ]
+  },
+  {
+    path: '/404',
+    name: '404', // 未找到
+    component: NoFound
+  },
+  {
+    path: '*',
+    redirect: '/404'
   }
 ]
 

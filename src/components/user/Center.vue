@@ -2,7 +2,7 @@
   <div class="user_center">
     <div class="msg">你好，admin，你已经是我们的正式会员！</div>
     <div class="layui-row">
-      <div class="layui-col-md6 border vip_box">
+      <div class="layui-col-md5 border vip_box">
         <div class="panel">
           <div class="title">我的会员信息：</div>
           <div class="content">
@@ -11,7 +11,7 @@
           </div>
         </div>
       </div>
-      <div class="layui-col-md6 border sign_box">
+      <div class="layui-col-md5 layui-col-md-offset1 border sign_box">
         <Sign />
       </div>
     </div>
@@ -119,7 +119,7 @@ export default {
   }
 
   .panel {
-    min-height: 123px;
+    min-height: 161px;
     padding: 0 10px;
     margin-bottom: 15px;
     color: #333;

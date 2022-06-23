@@ -10,6 +10,8 @@
         <a href="#succeess_case">成功案例</a>
         <a href="#team_intro">团队介绍</a>
         <a href="#activity">公司动态</a>
+        <!-- <router-link :to="{name: '404'}">404</router-link> -->
+        <router-link to="/user0/666">404</router-link>
         <!-- 搜索 -->
         <i class="iconfont icon-ai219"></i>
       </nav>
@@ -30,7 +32,11 @@
         </template>
         <!-- 登入后的状态 -->
         <template v-else>
-          <li class="layui-nav-item">
+          <li
+            class="layui-nav-item userInfo_box"
+            @mouseenter='mouse_enter()'
+            @mouseleave='mouse_out()'
+          >
             <a
               href="javascript:;"
               class="fly-nav-avatar"
@@ -48,11 +54,13 @@
                 :src="userInfo.pic"
                 alt="头像"
               >
-              <!-- <img src="https://tva1.sinaimg.cn/crop.0.0.118.118.180/5db11ff4gw1e77d3nqrv8j203b03cweg.jpg"> -->
               <span class="layui-nav-more"></span>
             </a>
             <!-- 下拉菜单 -->
-            <dl class="layui-nav-child">
+            <dl
+              class="layui-nav-child layui-anim layui-anim-downbit pull_down_menu"
+              :class="{'layui-show': isShowMenu}"
+            >
               <dd>
                 <a href="user/set.html">
                   <i class="iconfont icon-shezhi"></i>
@@ -102,6 +110,12 @@
 <script>
 export default {
   name: 'Header',
+  data () {
+    return {
+      isShowMenu: false,
+      hoverCtrl: {}
+    }
+  },
   computed: {
     isShow () {
       return this.$store.state.isLogin || false
@@ -117,12 +131,31 @@ export default {
   methods: {
     logout () {
       this.$confirm('确定要退出吗？', () => {
+        // this.$store.commit('setUserInfo', {})
+        // this.$store.commit('setToken', '')
+        // this.$store.commit('setIsLogin', false)
+        // 清空本地 localStorage中的数据
         localStorage.clear()
-        this.$store.commit('setUserInfo', '')
-        this.$store.commit('setToken', '')
-        this.$store.commit('setIsLogin', false)
-        this.$router.push('/')
+        // 刷新当前页面，清空vuex中的数据
+        window.location.reload()
+        // 跳转到首页，解决重复导航报错
+        this.$router.push('/', () => { })
       })
+    },
+    mouse_enter () {
+      // 清除定时器
+      clearTimeout(this.hoverCtrl)
+      this.hoverCtrl = setTimeout(() => {
+        console.log('enter')
+        this.isShowMenu = true
+      }, 300)
+    },
+    mouse_out () {
+      clearTimeout(this.hoverCtrl)
+      this.hoverCtrl = setTimeout(() => {
+        console.log('out')
+        this.isShowMenu = false
+      }, 300)
     }
   }
 }
@@ -196,6 +229,10 @@ header {
 
     .fly-nav-user {
       justify-self: center;
+
+      // .userInfo_box:hover{
+
+      // }
 
       .layui-nav-bar {
         display: none !important;

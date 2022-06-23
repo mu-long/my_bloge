@@ -29,7 +29,7 @@ $num: 10px;
 // 0到6，不包含6
 @for $i from 0 to 6 {
   .pd#{$i} {
-    padding: $i * $num;
+    padding: $i * $num !important;
   }
   .pdt#{$i} {
     padding-top: $i * $num;

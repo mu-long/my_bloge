@@ -28,7 +28,9 @@ const removePending = (key, isRequest = false) => {
 const instance = axios.create({
   // 配置请求根路径
   baseURL: process.env.NODE_ENV !== 'production' ? baseURL.dev : baseURL.pro,
-  headers: { 'Content-Type': 'application/json;charset=utf-8' },
+  headers: {
+    'Content-Type': 'application/json;charset=utf-8'
+  },
   timeout: 10000 // 超时时间
 })
 

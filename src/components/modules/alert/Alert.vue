@@ -4,7 +4,7 @@
     <div v-show="isShow">
       <!-- 迷你的弹框 -->
       <div
-        class="alert_mini"
+        class="alert_mini modal_content"
         v-if="type === 'mini' "
       >
         <!-- 提示信息 -->
@@ -13,7 +13,7 @@
       <!-- 丰富的弹框 -->
       <div
         v-else
-        class="alert_rich"
+        class="alert_rich modal_content"
       >
         <!-- 提示信息 -->
         <div class="msg">{{ msg }}</div>
@@ -131,13 +131,6 @@ $btn-dark: darken($btn-main, 10%);
 
 .alert_mini,
 .alert_rich {
-  z-index: 999999;
-  position: fixed;
-  left: 50%;
-  transform: translateX(-50%) translateY(-50%);
-  box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2);
-  background: #fff;
-  border-radius: 5px;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -214,16 +207,5 @@ $btn-dark: darken($btn-main, 10%);
       }
     }
   }
-}
-
-.mask {
-  z-index: 999998;
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background: rgba(0, 0, 0, 0.5);
-  overflow: hidden;
 }
 </style>
