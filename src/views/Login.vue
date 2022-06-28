@@ -26,7 +26,7 @@
                 v-slot="{ validate }"
                 ref="observer_ref"
               >
-                <!-- 用户名 -->
+                <!-- 邮箱 -->
                 <div class="layui-form-item">
                   <ValidationProvider
                     rules="required|email"
@@ -94,7 +94,7 @@
                       class="layui-form-mid layui-word-aux svg"
                       v-html="svg"
                       @click="_getCaptcha(sid)"
-                      v-if="svg !== '' "
+                      v-if="svg"
                     ></div>
                     <div
                       class="
@@ -149,19 +149,22 @@ export default {
       // email: '',
       email: 'imulong@qq.com', // 测试使用
       password: 'myc.666',
-      svg: '',
-      svgText: '',
-      code: '',
-      sid: '' // 验证码唯一标识
+      svg: '', // 验证码信息
+      svgText: '', // 验证码文字
+      code: '', // 用户输入的验证码
+      sid: this.$store.state.sid || '' // 验证码唯一标识
     }
   },
   components: {},
   mounted () {
-    const sid = getSid()
-    this.sid = sid
-    console.log('sid==>', sid)
+    if (!this.sid) {
+      const sid = getSid()
+      this.sid = sid
+      console.log('sid==>', sid)
+      this.$store.commit('setSid', sid)
+    }
 
-    this._getCaptcha(sid)
+    this._getCaptcha(this.sid)
   },
   methods: {
     hendleShow () {
@@ -212,15 +215,18 @@ export default {
         } else if (res.code === 401) {
           // 提示验证码错误
           this.$refs.code_ref.setErrors([res.msg])
+        } else if (res.code === 404) {
+          // 提示错误
+          console.log('用户名或者错误')
         }
         // 弹框提示
         // this.$confirm(res.msg)
         this.$mini(res.msg)
       })
-      // .catch(err => {
-      //   console.log(err)
-      //   this.$alert(err)
-      // })
+        .catch(err => {
+          console.log(err)
+          this.$mini(err)
+        })
     }
   }
 }

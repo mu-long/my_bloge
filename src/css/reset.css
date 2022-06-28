@@ -80,6 +80,12 @@ body {
   border-radius: 5px;
 }
 
+/* 鼠标禁用 */
+.not_allowed {
+  color: #ccc;
+  cursor: not-allowed;
+}
+
 .layui-tab-title {
   margin-bottom: 10px;
 }

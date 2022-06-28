@@ -141,13 +141,11 @@
                       class="layui-form-mid layui-word-aux svg"
                       v-html="svg"
                       @click="_getCaptcha(sid)"
-                      v-if="svg !== '' "
+                      v-if="svg"
                     ></div>
                     <div
-                      class="
-                      layui-form-mid
-                      layui-word-aux"
                       v-else
+                      class="layui-form-mid layui-word-aux"
                     >服务器错误，验证码获取失败！</div>
                     <div class="layui-form-mid layui-word-aux">{{ errors[0] }}</div>
                   </ValidationProvider>
@@ -197,16 +195,18 @@ export default {
   components: {},
   mounted () {
     window.vue = this
-    const sid = getSid()
-    this.sid = sid
-    console.log('sid==>', sid)
+    if (!this.sid) {
+      const sid = getSid()
+      this.sid = sid
+      console.log('sid==>', sid)
+      this.$store.commit('setSid', sid)
+    }
 
-    this._getCaptcha(sid)
+    this._getCaptcha(this.sid)
   },
   methods: {
     // 获取验证码
     _getCaptcha (sid) {
-      // let sid = this.$store.state.sid
       getCaptcha(sid).then((res) => {
         console.log(res)
         this.svg = res.data

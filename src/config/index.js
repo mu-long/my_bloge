@@ -13,4 +13,7 @@ const baseURL = {
   pro: 'http://your.domain.com'
 }
 
-export { baseURL }
+// 定义公共路径，不需要登录
+const publicPath = [/^\/public/, /^\/login/]
+
+export { baseURL, publicPath }

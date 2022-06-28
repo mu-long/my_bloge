@@ -8,26 +8,26 @@
     display: flex;
     justify-content: flex-end;
   }
+}
 
-  .layui-form {
-    margin-top: 20px;
+.layui-form {
+  margin-top: 20px;
 
-    .layui-word-aux {
-      color: #ff5722 !important;
-      font-weight: 600;
-    }
+  .layui-word-aux {
+    color: #ff5722 !important;
+    font-weight: 600;
+  }
 
-    .svg {
-      cursor: pointer;
-      position: relative;
-      top: -8px;
-    }
+  .svg {
+    cursor: pointer;
+    position: relative;
+    top: -8px;
+  }
 
-    .forget_pwd {
-      margin-left: 10px;
-      &:hover {
-        color: var(--themeColor);
-      }
+  .forget_pwd {
+    margin-left: 10px;
+    &:hover {
+      color: var(--themeColor);
     }
   }
 }

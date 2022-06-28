@@ -11,7 +11,7 @@
         <router-link :to="{name: 'picupload'}">修改头像</router-link>
       </li>
       <li>
-        <router-link :to="{name: 'resetpwd'}">修改密码</router-link>
+        <router-link :to="{name: 'updatepwd'}">修改密码</router-link>
       </li>
       <li>
         <router-link :to="{name: 'accounts'}">账号绑定</router-link>

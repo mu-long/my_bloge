@@ -57,7 +57,7 @@ export default {
         }, {
           icon: 'icon-mima',
           text: '修改密码',
-          link: 'resetpwd'
+          link: 'updatepwd'
         }, {
           icon: 'icon-bangding',
           text: '账号绑定',

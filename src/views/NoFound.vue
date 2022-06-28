@@ -19,6 +19,7 @@ export default {
 
 <style lang="scss" scoped>
 .layui-container {
+  margin-top: 60px;
   min-height: var(--minHeight);
   background: #fff;
   box-shadow: var(--boxShadow);

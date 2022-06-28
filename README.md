@@ -26,7 +26,7 @@ See [Configuration Reference](https://cli.vuejs.org/config/).
 ## [项目文档](https://doc.toimc.com/web/#/2/42)
 
 ## 接口说明
-- [他人接口](www.toimc.com:10040/html/web/controller/public/public.html#5d0666bebaa920000bb519b1)
+- [他人接口](http://www.toimc.com:10040/html/web/controller/public/public.html#5d0666bebaa920000bb519b1)
 - [本地接口](http://192.168.240.130:10000/mock/629dadfef4a691000c70c46d)
 - 使用
   - 点击项目，打开设置，找到Mock，按照说明设置

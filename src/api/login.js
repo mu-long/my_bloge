@@ -13,11 +13,11 @@ const getCaptcha = sid =>
     .then(result => result)
 
 /**
- * 重置 找回密码
+ * 忘记密码
  *
- * @param {*} option 用户信息 (邮箱 验证码)
+ * @param {*} data 用户信息 (邮箱 密码 验证码)
  */
-const forget = option => myAxios.post('/forget', { ...option })
+const forget = data => myAxios.post('/login/forget', data)
 
 /**
  * 登录接口

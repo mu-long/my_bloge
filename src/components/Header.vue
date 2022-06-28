@@ -62,19 +62,19 @@
               :class="{'layui-show': isShowMenu}"
             >
               <dd>
-                <a href="user/set.html">
+                <router-link :to="{name: 'myinfo'}">
                   <i class="iconfont icon-shezhi"></i>
                   <span>基本设置</span>
-                </a>
+                </router-link>
               </dd>
               <dd>
-                <a href="user/message.html">
+                <router-link :to="{name: 'msg'}">
                   <i
                     class="iconfont icon-xiaoxi3"
                     style="top: 4px;"
                   ></i>
                   <span>我的消息</span>
-                </a>
+                </router-link>
               </dd>
               <dd>
                 <router-link to="/center">
@@ -94,7 +94,6 @@
               </dd>
             </dl>
           </li>
-          <!-- <span class="layui-nav-bar"></span> -->
         </template>
       </ul>
       <!-- 汉堡伸缩 -->
@@ -113,7 +112,7 @@ export default {
   data () {
     return {
       isShowMenu: false,
-      hoverCtrl: {}
+      hoverCtrl: {} // 存放定时器
     }
   },
   computed: {
@@ -122,7 +121,7 @@ export default {
     },
     userInfo () {
       return this.$store.state.userInfo || {
-        userName: '',
+        username: '',
         pic: '',
         isVip: 0
       }
@@ -131,17 +130,15 @@ export default {
   methods: {
     logout () {
       this.$confirm('确定要退出吗？', () => {
-        // this.$store.commit('setUserInfo', {})
-        // this.$store.commit('setToken', '')
-        // this.$store.commit('setIsLogin', false)
         // 清空本地 localStorage中的数据
         localStorage.clear()
         // 刷新当前页面，清空vuex中的数据
-        window.location.reload()
+        window.location.replace('/')
         // 跳转到首页，解决重复导航报错
-        this.$router.push('/', () => { })
+        // this.$router.push('/').catch()
       })
     },
+    // 鼠标移入
     mouse_enter () {
       // 清除定时器
       clearTimeout(this.hoverCtrl)
@@ -150,8 +147,10 @@ export default {
         this.isShowMenu = true
       }, 300)
     },
+    // 鼠标移出
     mouse_out () {
       clearTimeout(this.hoverCtrl)
+      // 设置定时器，延迟消失
       this.hoverCtrl = setTimeout(() => {
         console.log('out')
         this.isShowMenu = false

@@ -10,6 +10,10 @@ const Login = () => import(/* webpackChunkname: "login" */ '../views/Login.vue')
 const Logon = () => import(/* webpackChunkname: "logon" */ '../views/Logon.vue')
 const Forget = () =>
   import(/* webpackChunkname: "forget" */ '../views/Forget.vue')
+const ResetEmail = () =>
+  import(/* webpackChunkname: "reset_email" */ '../views/Reset_email.vue')
+const ResetPassword = () =>
+  import(/* webpackChunkname: "reset_pwd" */ '../views/Reset_pwd.vue')
 const Index = () =>
   import(/* webpackChunkname: "channels-index" */ '../views/channels/Index.vue')
 const Template1 = () =>
@@ -48,9 +52,9 @@ const PicUpload = () =>
   import(
     /* webpackChunkname: "picupload" */ '../components/user/common/PicUpload.vue'
   )
-const ResetPwd = () =>
+const UpdatePwd = () =>
   import(
-    /* webpackChunkname: "resetpwd" */ '../components/user/common/ResetPwd.vue'
+    /* webpackChunkname: "updatePwd" */ '../components/user/common/UpdatePwd.vue'
   )
 const Accounts = () =>
   import(
@@ -98,9 +102,19 @@ const routes = [
     component: Forget
   },
   {
+    path: '/reset_email',
+    name: 'reset_email', // 重置邮箱
+    component: ResetEmail
+  },
+  {
+    path: '/reset_pwd',
+    name: 'reset_pwd', // 重置密码
+    component: ResetPassword
+  },
+  {
     // path: '/myHome/:id',
     path: '/myHome/0',
-    name: 'myHome', // 忘记密码
+    name: 'myHome', // 我的主页
     props: true,
     component: MyHome
   },
@@ -153,9 +167,9 @@ const routes = [
             component: PicUpload
           },
           {
-            path: 'resetpwd',
-            name: 'resetpwd', // 修改密码
-            component: ResetPwd
+            path: 'updatepwd',
+            name: 'updatepwd', // 修改密码
+            component: UpdatePwd
           },
           {
             path: 'accounts',
@@ -198,6 +212,9 @@ router.beforeEach((to, from, next) => {
     // 获取包装的有效签名，不需要保密的私钥
     const decoded = jwt.decode(token)
     // console.log('解码==>', decoded)
+    if (!decoded) {
+      return next('/')
+    }
     console.log(
       '登录是否过期 ==>',
       !moment().isBefore(moment(decoded.exp * 1000))

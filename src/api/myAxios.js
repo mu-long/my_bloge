@@ -1,8 +1,9 @@
-import { baseURL } from '@/config'
+import { baseURL, publicPath } from '@/config'
 import axios from 'axios'
 // 进度条
 import NProgress from 'nprogress'
 import 'nprogress/nprogress.css'
+import store from '../store'
 
 // 定义取消请求令牌
 const CancelToken = axios.CancelToken
@@ -40,6 +41,17 @@ instance.interceptors.request.use(
     // 请求之前触发
     // 进度条开始
     NProgress.start()
+
+    // 判断是否为公共路径
+    let isPublic = false
+    publicPath.map(path => {
+      isPublic = isPublic || path.test(config.url)
+    })
+    const token = store.state.token
+    // 如果是私有路径携带token
+    if (!isPublic && token) {
+      config.headers.Authorization = 'Bearer ' + store.state.token
+    }
 
     // 拦截重复请求
     config.cancelToken = new CancelToken(c => {
