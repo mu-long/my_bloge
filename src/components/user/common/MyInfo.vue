@@ -36,10 +36,11 @@
           <ValidationProvider
             rules="required|minmax:3,6"
             v-slot="{ errors }"
+            ref="username_ref"
           >
             <input
-              type="昵称"
-              name="title"
+              type="text"
+              name="昵称"
               required
               lay-verify="required"
               placeholder="请输入昵称"
@@ -178,7 +179,7 @@ export default {
       svg: '', // 验证码信息
       svgText: '', // 验证码文字
       code: '', // 用户输入的验证码
-      sid: '' // 验证码唯一标识
+      sid: this.$store.state.sid || '' // 验证码唯一标识
     }
   },
   mounted () {
@@ -214,18 +215,26 @@ export default {
         username: this.username, // 昵称
         location: this.location, // 位置
         gender: this.gender, // 性别
-        regmark: this.regmark // 签名
+        regmark: this.regmark, // 签名
+        code: this.code,
+        sid: this.sid
       }
       // console.log(666)
       await updateUserInfo(updateInfo).then(res => {
         if (res.code === 200) {
           // 信息更新成功！
-          this.$pop(res.msg)
-          this.$store.commit('setUserInfo', updateInfo)
-        } else {
-          // 信息更新失败！
-          this.$pop(res.msg)
+          // this.$pop(res.msg)
+          // 更新本地资料
+          const user = this.$store.state.userInfo
+          this.$store.commit('setUserInfo', Object.assign(user, updateInfo))
+        } else if (res.code === 402) {
+          // 提示验证码错误
+          this.$refs.code_ref.setErrors([res.msg])
+        } else if (res.code === 403) {
+          // 提示验证码错误
+          this.$refs.username_ref.setErrors([res.msg])
         }
+        this.$pop(res.msg)
       }).catch(err => {
         console.log(err)
         // if (err.toString().includes('500')) {

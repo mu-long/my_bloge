@@ -147,7 +147,7 @@ export default {
     return {
       // username: '',
       // email: '',
-      email: 'imulong@qq.com', // 测试使用
+      email: '2069893427@qq.com', // 测试使用
       password: 'myc.666',
       svg: '', // 验证码信息
       svgText: '', // 验证码文字

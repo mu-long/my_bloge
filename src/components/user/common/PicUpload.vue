@@ -2,23 +2,88 @@
   <div class="layui-tab-item layui-show pic_upload">
     <!-- 修改头像 -->
     <div class="avatar-add">
-      <p>建议尺寸168*168，支持jpg、png、gif，最大不能超过50KB</p>
-      <button
-        type="button"
-        class="layui-btn upload_btn"
+      <p>建议尺寸168*168，支持jpg、png、gif，最大不能超过1024KB！</p>
+      <form
+        method="post"
+        enctype="multipart/form-data"
       >
-        <i class="layui-icon">&#xe67c;</i>
-        上传头像
-      </button>
-      <img src="https://tva1.sinaimg.cn/crop.0.0.118.118.180/5db11ff4gw1e77d3nqrv8j203b03cweg.jpg" />
+        <label
+          type="button"
+          class="layui-btn upload_btn"
+        >
+          <i class="layui-icon">&#xe67c;</i>
+          上传头像
+          <!-- 文件上传 -->
+          <input
+            id="pic"
+            type="file"
+            name="file"
+            accept="image/jpg,image/png,image/gif"
+            @change="uploadPic"
+          >
+        </label>
+      </form>
+      <img :src="pic" />
       <span class="loading"></span>
     </div>
   </div>
 </template>
 
 <script>
+import { uploadImg, updateUserInfo } from '@/api/user'
+import { baseURL } from '@/config'
+
 export default {
-  name: 'PicUpload' // 修改头像
+  name: 'PicUpload', // 修改头像
+  data () {
+    return {
+      pic: this.$store.state.userInfo.pic || '/img/avatar/默认男头.png',
+      formData: ''
+    }
+  },
+  methods: {
+    async uploadPic (e) {
+      const file = e.target.files
+      console.log('e.target ==> ', e.target)
+      console.log('file ==> ', file)
+      const formData = new FormData()
+      if (file.length > 0) {
+        // 通过FormData将文件转成二进制数据
+        // 字段名'file'要和服务端的名字对应
+        formData.append('file', file[0])
+        this.formData = formData
+      }
+
+      // 上传图片
+      await uploadImg(formData).then((res) => {
+        if (res.code === 200) {
+          console.log('上传图片 ==> ', res)
+          this.$pop('图片上传成功！')
+
+          const baseurl =
+            process.env.NODE_ENV === 'production'
+              ? baseURL.pro
+              : baseURL.dev
+          // 拼接图片服务器路径
+          this.pic = baseurl + res.data.filePath
+
+          // 更新用户基本资料 ==> updateUserInfo
+          updateUserInfo({ pic: this.pic }).then(res2 => {
+            if (res2.code === 200) {
+              // 更新本地资料
+              const user = this.$store.state.userInfo
+              user.pic = this.pic
+              this.$store.commit('setUserInfo', user)
+            }
+          })
+          // 清空input信息，方便下次选择
+          document.getElementById('pic').value = ''
+        } else {
+          this.$pop('图片上传失败！')
+        }
+      })
+    }
+  }
 }
 </script>
 
@@ -40,6 +105,10 @@ export default {
 
   .upload_btn {
     margin: 30px 0;
+  }
+
+  input {
+    display: none;
   }
 
   img {

@@ -21,4 +21,7 @@ const updateEmail = data =>
  */
 const resetPwd = data => myAxios.get('/public/reset_pwd?' + qs.stringify(data))
 
-export { userSign, updateUserInfo, updatepwd, updateEmail, resetPwd }
+// 上传图片
+const uploadImg = formData => myAxios.post('/user/upload_img', formData)
+
+export { userSign, updateUserInfo, updatepwd, updateEmail, resetPwd, uploadImg }

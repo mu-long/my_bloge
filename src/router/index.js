@@ -221,6 +221,7 @@ router.beforeEach((to, from, next) => {
     )
     // 如果当前时间 不在过期时间之前 清空登录信息
     if (!moment().isBefore(moment(decoded.exp * 1000))) {
+      console.log('登录过期...！')
       store.commit('setUserInfo', '')
       store.commit('setToken', '')
       store.commit('setIsLogin', false)

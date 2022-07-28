@@ -114,6 +114,11 @@ export default {
         this.$refs.pwd_ref.setErrors(['密码输入不一致！'])
         return this.$mini('密码输入不一致！')
       }
+
+      if (this.password === this.old_pwd) {
+        return this.$alert('新密码与旧密码相同！请重新修改或取消！')
+      }
+
       const isValid = await this.$refs.observer_ref.validate()
       // 如果校验失败
       if (!isValid) return
@@ -126,11 +131,14 @@ export default {
         requestAnimationFrame(() => {
           this.$refs.observer_ref.reset()
         })
+        this.old_pwd = ''
+        this.password = ''
+        this.confirmPassword = ''
       } else if (res.code === 402) {
         this.$refs.old_pwd_ref.setErrors([`${res.msg}`])
         this.$mini(res.msg)
       } else {
-        this.$mini(res.msg)
+        this.$alert(res.msg)
       }
     }
   }

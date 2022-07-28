@@ -28,11 +28,11 @@ const removePending = (key, isRequest = false) => {
 // 使用自定义配置 创建一个新的axios实例
 const instance = axios.create({
   // 配置请求根路径
-  baseURL: process.env.NODE_ENV !== 'production' ? baseURL.dev : baseURL.pro,
-  headers: {
-    'Content-Type': 'application/json;charset=utf-8'
-  },
-  timeout: 10000 // 超时时间
+  baseURL: process.env.NODE_ENV !== '"production"' ? baseURL.dev : baseURL.pro,
+  // headers: {
+  //   'Content-Type': 'application/json;charset=utf-8'
+  // },
+  timeout: 20000 // 超时时间
 })
 
 // 请求拦截器

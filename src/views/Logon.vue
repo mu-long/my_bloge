@@ -183,7 +183,7 @@ export default {
   data () {
     return {
       username: '', // 用户昵称
-      email: 'imulong@qq.com',
+      email: '2069893427@qq.com',
       password: '',
       confirmPassword: '', // 确认密码
       svg: '',
