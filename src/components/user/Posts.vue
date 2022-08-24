@@ -22,5 +22,8 @@ export default {
 }
 </script>
 
-<style>
+<style lang="scss" scoped>
+.layui-tab-title {
+  margin-bottom: 15px;
+}
 </style>

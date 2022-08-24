@@ -60,6 +60,8 @@ const Accounts = () =>
   import(
     /* webpackChunkname: "accounts" */ '../components/user/common/Accounts.vue'
   )
+const AddPost = () =>
+  import(/* webpackChunkname: "addPost" */ '../components/contents/AddPost.vue')
 
 Vue.use(VueRouter)
 
@@ -110,6 +112,11 @@ const routes = [
     path: '/reset_pwd',
     name: 'reset_pwd', // 重置密码
     component: ResetPassword
+  },
+  {
+    path: '/addPost',
+    name: 'addPost', // 新增帖子
+    component: AddPost
   },
   {
     // path: '/myHome/:id',

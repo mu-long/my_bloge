@@ -6,6 +6,7 @@
       <nav>
         <!-- <a href="#/home">首页</a> -->
         <router-link to="/">首页</router-link>
+        <router-link to="/addPost">发帖</router-link>
         <a href="#about_us">关于我们</a>
         <a href="#succeess_case">成功案例</a>
         <a href="#team_intro">团队介绍</a>

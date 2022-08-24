@@ -27,10 +27,10 @@
       </ul>
       <div class="right layui-hide-xs">
         <span class="layui-icon layui-icon-search search"></span>
-        <a
-          href
+        <router-link
           class="layui-btn"
-        >发帖</a>
+          to="/addPost"
+        >发帖</router-link>
       </div>
     </div>
   </div>

@@ -24,4 +24,15 @@ const resetPwd = data => myAxios.get('/public/reset_pwd?' + qs.stringify(data))
 // 上传图片
 const uploadImg = formData => myAxios.post('/user/upload_img', formData)
 
-export { userSign, updateUserInfo, updatepwd, updateEmail, resetPwd, uploadImg }
+// 新增帖子
+const addPost = data => myAxios.post('/user/add_post', data)
+
+export {
+  userSign,
+  updateUserInfo,
+  updatepwd,
+  updateEmail,
+  resetPwd,
+  uploadImg,
+  addPost
+}

@@ -17,7 +17,7 @@
           <input
             id="pic"
             type="file"
-            name="file"
+            name="avatar"
             accept="image/jpg,image/png,image/gif"
             @change="uploadPic"
           >
@@ -49,8 +49,8 @@ export default {
       const formData = new FormData()
       if (file.length > 0) {
         // 通过FormData将文件转成二进制数据
-        // 字段名'file'要和服务端的名字对应
-        formData.append('file', file[0])
+        // 字段名'avatar'要和服务端的名字对应
+        formData.append('avatar', file[0])
         this.formData = formData
       }
 

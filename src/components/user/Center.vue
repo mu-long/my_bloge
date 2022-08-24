@@ -6,8 +6,9 @@
         <div class="panel">
           <div class="title">我的会员信息：</div>
           <div class="content">
-            <p>你的积分有：<b>66</b></p>
-            <p>您当前为：<b>VIP用户</b></p>
+            <p>你的积分有：<b>{{favs}}</b></p>
+            <p v-if="isVip === 1">您当前为：<b>VIP用户</b></p>
+            <p v-else>您当前为：非VIP用户</p>
           </div>
         </div>
       </div>
@@ -45,6 +46,8 @@ export default {
   name: 'user_center', // 用户中心
   data () {
     return {
+      favs: this.$store.state.userInfo.favs || 0,
+      isVip: this.$store.state.userInfo.isVip || 0,
       lnkArr: [
         {
           icon: 'icon-shezhi',

@@ -157,11 +157,6 @@ export default {
               this.lists = this.lists.concat(res.data)
             }
           }
-        }).catch(err => {
-          if (err) {
-            console.log('err==>', err)
-            this.$mini(err.message)
-          }
         })
     },
     nextPage () {

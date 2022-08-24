@@ -57,6 +57,46 @@ body {
   --minHeight: 600px; /* 最小高度 */
 }
 
+/* 代码块 */
+pre {
+  padding: 10px 15px;
+  margin: 10px 0;
+  font-size: 12px;
+  border-left: 6px solid #009688;
+  background-color: #f8f8f8;
+  font-family: Courier New;
+  overflow: auto;
+}
+
+/* 发表文章相关样式 */
+.post_face {
+  display: inline-block;
+  margin: 0 5px;
+  transition: all linear 0.2s;
+}
+.post_face:hover {
+  transform: scale(1.2);
+}
+.post_img {
+  height: 200px;
+  margin: 5px auto;
+  box-shadow: var(--boxShadow);
+  transition: all linear 0.3s;
+}
+.post_img:hover {
+  transform: translateY(-5px) scale(1.1);
+}
+.post_link {
+  margin: 5px;
+  color: #3abdf2;
+  font-weight: bold;
+  transition: all linear 0.2s;
+}
+.post_link:hover {
+  color: hotpink;
+  font-size: 16px;
+}
+
 /* 遮罩层 */
 .mask {
   z-index: 999998;
@@ -84,10 +124,6 @@ body {
 .not_allowed {
   color: #ccc;
   cursor: not-allowed;
-}
-
-.layui-tab-title {
-  margin-bottom: 10px;
 }
 
 /* .container {
