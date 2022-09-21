@@ -20,7 +20,8 @@ export default {
 </script>
 
 <style lang="scss">
-@import './iconfont/iconfont.css';
+// @import './iconfont/iconfont.css';
+@import '//at.alicdn.com/t/c/font_3462814_rk25c4is9o.css';
 @import './css/reset.css';
 /* .pd0 {
   padding: 0px;

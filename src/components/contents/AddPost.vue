@@ -134,7 +134,7 @@
                 <div class="layui-form-item layui-form-text">
                   <Editor
                     @changeContent="addContent"
-                    :content='content'
+                    :initContent='content'
                   ></Editor>
                 </div>
                 <!-- 验证码 -->
@@ -233,6 +233,12 @@ export default {
         }, {
           text: '建议',
           value: 'advise'
+        }, {
+          text: '动态',
+          value: 'logs'
+        }, {
+          text: '公告',
+          value: 'notice'
         }
       ]
     }
@@ -270,17 +276,34 @@ export default {
     },
     async submit () {
       // 如果校验失败
-      const isValid = await this.$refs.observer_ref.validate()
+      const isValid = this.$refs.observer_ref.validate()
       if (!isValid) {
         return
       }
 
+      if (this.code === '') {
+        return this.$pop({
+          msg: '请填写验证码！',
+          type: 'shake'
+        })
+      }
+
       const column = this.columnList[this.columnIndex].value
-      if (column === '') return this.$pop('请选择文章所在专栏！', 'shake')
-      if (this.content === '') return this.$pop('文章内容不能为空！', 'shake')
+      if (column === '') {
+        return this.$pop({
+          msg: '请选择文章所在专栏！',
+          type: 'shake'
+        })
+      }
+      if (this.content === '') {
+        return this.$pop({
+          msg: '文章内容不能为空！',
+          type: 'shake'
+        })
+      }
 
       // 添加新的文章
-      addPost({
+      await addPost({
         code: this.code, // 验证码
         sid: this.sid, // 验证码唯一标识
         title: this.title, // 文章标题
@@ -290,14 +313,18 @@ export default {
       }).then(res => {
         console.log('login res==>', res)
         if (res.code === 200) {
-          this.$pop(res.msg)
+          this.$pop({ msg: res.msg + '2秒钟后跳转到详情页面！' })
           // 重置表单
           this.resetForm()
           setTimeout(() => {
-            this.$router.push({ name: 'index' })
+            this.$router.push({ name: 'postDetail', params: { tid: res.data._id } })
           }, 2000)
         } else {
-          this.$pop('发帖失败！')
+          // 发帖失败！
+          this.$pop({
+            msg: res.msg,
+            type: 'shake'
+          })
         }
       })
     },
@@ -306,7 +333,7 @@ export default {
       if (e && e.target.className.includes('layui-btn-danger')) {
         console.log('重置表单 ==>', e)
         console.log('重置表单 ==>', e.target.className)
-        this.$pop('重置表单成功！')
+        this.$pop({ msg: '重置表单成功！' })
       }
       // 清空已经发布的内容
       localStorage.removeItem('addPostData')
@@ -327,7 +354,7 @@ export default {
       if (e && e.target.className.includes('layui-btn-normal')) {
         console.log('存为草稿 ==>', e)
         console.log('存为草稿 ==>', e.target.className)
-        this.$pop('保存草稿成功！')
+        this.$pop({ msg: '保存草稿成功！' })
       }
       // 保存未发布的内容到本地一份
       const saveData = {

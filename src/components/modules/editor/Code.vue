@@ -59,7 +59,7 @@ export default {
       if (this.codeTxt === '') {
         // 输入框 获取焦点
         document.getElementById('codeInput').focus()
-        this.$pop('请输入代码或任意文本', 'shake')
+        this.$pop({ msg: '请输入代码或任意文本', type: 'shake' })
         return
       }
       this.$emit('addCodeEvent', this.codeTxt)

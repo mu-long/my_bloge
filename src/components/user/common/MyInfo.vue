@@ -223,7 +223,6 @@ export default {
       await updateUserInfo(updateInfo).then(res => {
         if (res.code === 200) {
           // 信息更新成功！
-          // this.$pop(res.msg)
           // 更新本地资料
           const user = this.$store.state.userInfo
           this.$store.commit('setUserInfo', Object.assign(user, updateInfo))
@@ -234,13 +233,13 @@ export default {
           // 提示验证码错误
           this.$refs.username_ref.setErrors([res.msg])
         }
-        this.$pop(res.msg)
+        this.$pop({ msg: res.msg })
       }).catch(err => {
         console.log(err)
         // if (err.toString().includes('500')) {
         //   this.$alert('重置链接到期！请重新操作...')
         // }
-        this.$pop('信息更新失败！')
+        this.$pop({ msg: '信息更新失败！' })
       })
     }
   }

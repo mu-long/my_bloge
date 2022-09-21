@@ -48,7 +48,7 @@
         name="content"
         placeholder="详细描述..."
         class="layui-textarea fly-editor"
-        id="edit"
+        id="textEdit"
         @focus="focusEvent()"
         @blur="blurEvent()"
         v-model="content"
@@ -105,16 +105,22 @@ import Preview from './Preview.vue'
 export default {
   name: 'text_editor', // 文本编辑器
   components: { Face, ImgUpload, AddLink, Code, Preview },
-  props: ['content'],
+  props: ['initContent'],
   data () {
     return {
       current: '', // 当前的选项
       codeWidth: 600,
       codeHeight: 200,
-      // content: '', // 显示内容
+      content: '', // 显示内容
       insertTxt: '', // 插入文本
       cursorSite: 0, // 光标位置
       newOursorSite: 0 // 新光标位置
+    }
+  },
+
+  watch: {
+    initContent (newVal, oldVal) {
+      this.content = newVal
     }
   },
 
@@ -152,7 +158,7 @@ export default {
     // 计算光标的当前位置
     GetCursorSite () {
       let cursorSite = 0
-      const ele = document.getElementById('edit')
+      const ele = document.getElementById('textEdit')
       if (ele.selectionStart || ele.selectionStart === '0') {
         cursorSite = ele.selectionStart
       } else if (document.selection) {
@@ -192,7 +198,7 @@ export default {
       console.log('插入', this.content)
 
       if (this.insertTxt.length) {
-        const ele = document.getElementById('edit')
+        const ele = document.getElementById('textEdit')
         this.newOursorSite = this.cursorSite + val.length
         setTimeout(() => {
           // 设置光标开始的位置
@@ -267,8 +273,8 @@ export default {
   },
 
   mounted () {
-    if (this.content === '') {
-      this.content = `"以下内容仅供测试使用！ Face[嘻嘻]\n\n      [Hr/]\n
+    if (this.initContent === '') {
+      this.initContent = `"以下内容仅供测试使用！ Face[嘻嘻]\n\n      [Hr/]\n
       1.表情\n      Face[ok]  Face[熊猫]\n\n
       [Hr/]\n
       2. 链接\n
@@ -279,7 +285,7 @@ export default {
       [Code]\n      <div>\n        <p>666</p>\n      </div>\n      [/Code]\n
       [Hr/]\n\n
       [Code]\n      \x3Cscript>\n      import convertHtml from '@/utils/convertHtml'\n\n      export default {\n        name: 'Preview', // 预览\n        props: ['isShow', 'content'],\n        data () {\n          return {\n          }\n        },\n        computed: {\n          replaceContent () {\n            // 根据content的内容，转义成为html代码\n            if (typeof this.content === 'undefined' || this.content.trim() === '') return\n            return convertHtml(this.content)\n          }\n        },\n        methods: {\n          close () {\n            // 触发关闭事件\n            this.$emit('closeEvent')\n          }\n        }\n      }\n      \x3C/script>\n      [/Code] \n\n
-      4. 图片\n      Img[/post_img/2022-0817/7f98fdd5-36ed-40e7-bd66-e6d53ea6462f.png] \n      Img[/post_img/2022-0807/8b552d3f-6372-468c-9029-4279469a5a12.png]"
+      4. 图片\n      Img[http://localhost:3000/post_img/2022-0817/7f98fdd5-36ed-40e7-bd66-e6d53ea6462f.png] \n      Img[http://localhost:3000/post_img/2022-0807/8b552d3f-6372-468c-9029-4279469a5a12.png]"
       `
     }
     // $nextTick 将回调延迟到下次 DOM 更新循环之后执行

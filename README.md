@@ -40,4 +40,22 @@ Mock Js文件： 下载 net.js (需要安装node环境)
 node net.js http://192.168.240.130:10000/mock/629dadfef4a691000c70c46d http://localhost:3000
 
 // 然后将您开发工程下的根地址替换为localhost:36742即可开启您的Mock之旅！
+
+// src\config\index.js
+/*
+  发送请求基本路径
+*/
+const baseURL = {
+  // dev: 'http://localhost:3000',
+  // mock server 地址
+  dev: 'http://localhost:36742',
+  pro: 'http://your.domain.com'
+}
+
+// vue.config.js
+devServer: {
+  // proxy: 'http://localhost:3000'
+  // mock server 地址
+  proxy: 'http://localhost:36742'
+}
 ```

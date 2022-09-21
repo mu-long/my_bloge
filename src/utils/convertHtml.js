@@ -29,9 +29,9 @@ const convertHtml = (val = '') => {
   const imgReg = /Img\[\S+\]/g
   if (imgReg.test(result)) {
     const group = result.match(imgReg)
-    console.log('group ==> ', group)
+    // console.log('group ==> ', group)
     group.map(item => {
-      console.log('item ==> ', item)
+      // console.log('item ==> ', item)
       result = result.replace(
         item,
         `<img class="post_img" src='${item.substring(4, item.length - 1)}'>`
@@ -43,14 +43,14 @@ const convertHtml = (val = '') => {
   const linkReg = /A\(\S+\)\[\S+\]/g
   if (linkReg.test(result)) {
     const group = result.match(linkReg)
-    console.log('group ==> ', group)
+    // console.log('group ==> ', group)
     const titleReg = /\((\S+)\)/
     const urlReg = /\[(\S+)\]/
     group.map(item => {
       const titleGroup = item.match(titleReg)
       const urlGroup = item.match(urlReg)
-      console.log('titleGroup ==> ', titleGroup)
-      console.log('urlGroup ==> ', urlGroup)
+      // console.log('titleGroup ==> ', titleGroup)
+      // console.log('urlGroup ==> ', urlGroup)
       result = result.replace(
         item,
         `<a class="post_link" href="${urlGroup[1]}">${titleGroup[1]}</a>`
@@ -68,7 +68,7 @@ const convertHtml = (val = '') => {
     // 3.最后返回这个元素的innerHTML，即得到经过HTML编码转换的字符串了
     const output = temp.innerHTML
     temp = null
-    console.log('output ==> ', output)
+    // console.log('output ==> ', output)
     return output
   }
 
@@ -76,9 +76,9 @@ const convertHtml = (val = '') => {
   const codeReg = /\[Code\][\d\D]*?\[\/Code\]/g
   if (codeReg.test(result)) {
     const group = result.match(codeReg)
-    console.log('group ==> ', group)
+    // console.log('group ==> ', group)
     group.map(item => {
-      console.log('item ==> ', item)
+      // console.log('item ==> ', item)
       result = result.replace(item, htmlEncode(item))
     })
     result = result.replace(/\[Code\]/g, '<pre>')
@@ -92,7 +92,7 @@ const convertHtml = (val = '') => {
   result = result.replace(/\r\n/g, '<br />')
   result = result.replace(/\n/g, '<br />')
 
-  console.log('转换为HTML result ==> ', result)
+  // console.log('转换为HTML result ==> ', result)
   return result
 }
 

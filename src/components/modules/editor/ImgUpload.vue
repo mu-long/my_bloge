@@ -94,7 +94,7 @@ export default {
       await uploadImg(this.formData).then(res => {
         if (res.code === 200) {
           console.log('上传图片 ==> ', res)
-          this.$pop('图片上传成功！')
+          this.$pop({ msg: '图片上传成功！' })
 
           const baseurl =
             process.env.NODE_ENV === 'production'
@@ -106,7 +106,7 @@ export default {
           // 清空input信息，方便下次选择
           document.getElementById('uploadImg').value = ''
         } else {
-          this.$pop('图片上传失败！')
+          this.$pop({ msg: '图片上传失败！' })
         }
       })
     },
@@ -114,7 +114,7 @@ export default {
       if (this.imgUrl === '') {
         // 输入框 获取焦点
         document.getElementById('fileInput').focus()
-        this.$pop('请上传图片或者复制图片链接', 'shake')
+        this.$pop({ msg: '请上传图片或者复制图片链接', type: 'shake' })
         return
       }
       this.$emit('addImgEvent', this.imgUrl)

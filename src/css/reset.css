@@ -38,6 +38,12 @@ body {
   /* min-width: 1226px; */
   font-size: 14px;
 }
+/* 本地字体 */
+@font-face {
+  font-family: '杨任东_竹石体_Regular';
+  src: url('../assets/font/YangRenDongZhuShiTi-Regular-2.ttf');
+  font-display: swap;
+}
 
 /* color: var(--themeColor); */
 :root {
@@ -52,7 +58,10 @@ body {
   --textcolor-dark-gray: #727272; /* 深灰 */
   --textcolor-light-gray: #c6c6c6; /* 浅灰 */
   --maskColor: rgba(0, 0, 0, 0.6); /* 遮罩层 */
-  --orange: #ff5722; /* 橙色 */
+  --success: #5fb878; /* 成功 */
+  --danger: #ff5722; /* 失败 危险 */
+  --warning: #ffb800; /* 警告 */
+  --info: #31bdec; /* 引导 */
   --boxShadow: 0 15px 30px rgb(0 0 0 / 20%); /* 盒子阴影 */
   --minHeight: 600px; /* 最小高度 */
 }

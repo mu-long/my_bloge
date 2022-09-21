@@ -254,7 +254,7 @@ export default {
         this.$refs.email_ref.setErrors([res.msg])
       }
       // 弹框提示
-      this.$pop(res.msg)
+      this.$pop({ msg: res.msg })
     }
   }
 }

@@ -1,5 +1,5 @@
 <template>
-  <div class="panel">
+  <div class="panel_nav">
     <div class="layui-container">
       <ul>
         <!-- layui-hide-* 定义不同设备下的隐藏类 xs 超小屏幕(手机)、sm 小屏幕(平板)、md 中等屏幕(电脑)、lg 大型屏幕 -->
@@ -116,60 +116,58 @@ export default {
   }
 }
 
-.home {
-  .panel {
-    position: relative;
-    z-index: 999;
-    margin-bottom: 10px;
-    border-radius: 2px;
-    background: #fff;
-    box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+.panel_nav {
+  position: relative;
+  z-index: 999;
+  margin-bottom: 10px;
+  border-radius: 2px;
+  background: #fff;
+  box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
 
-    .layui-container {
-      min-height: 50px;
-      line-height: 50px;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-    }
+  .layui-container {
+    min-height: 50px;
+    line-height: 50px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
 
-    ul {
-      // display: flex;
-      // justify-content: center;
-      // align-items: center;
+  ul {
+    // display: flex;
+    // justify-content: center;
+    // align-items: center;
 
-      li {
+    li {
+      display: inline-block;
+      padding: 0 20px;
+      font-size: 16px;
+      height: 100%;
+
+      .line {
         display: inline-block;
-        padding: 0 20px;
-        font-size: 16px;
-        height: 100%;
-
-        .line {
-          display: inline-block;
-          margin: 0 20px;
-          vertical-align: middle;
-          width: 1px;
-          height: 15px;
-          background: #e2e2e2;
-        }
+        margin: 0 20px;
+        vertical-align: middle;
+        width: 1px;
+        height: 15px;
+        background: #e2e2e2;
       }
     }
+  }
 
-    .search {
-      margin-right: 10px;
-      vertical-align: middle;
-      font-size: 18px;
-      cursor: pointer;
-      &:hover {
-        color: var(--themeColor);
-      }
+  .search {
+    margin-right: 10px;
+    vertical-align: middle;
+    font-size: 18px;
+    cursor: pointer;
+    &:hover {
+      color: var(--themeColor);
     }
+  }
 
-    .layui-btn {
-      &:hover {
-        color: #fff !important;
-        opacity: 0.8;
-      }
+  .layui-btn {
+    &:hover {
+      color: #fff !important;
+      opacity: 0.8;
     }
   }
 }

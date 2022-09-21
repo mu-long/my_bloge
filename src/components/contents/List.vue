@@ -47,7 +47,7 @@
       <!-- 列表 -->
       <ListItem
         :lists="lists"
-        :isEnd="isEnd"
+        :isOver="isOver"
         @next_page="nextPage()"
       />
     </div>
@@ -56,7 +56,7 @@
 
 <script>
 import ListItem from './ListItem.vue'
-import { getList } from '../../api/content'
+import { getPostList } from '@/api/content'
 
 export default {
   name: 'List',
@@ -70,47 +70,53 @@ export default {
       sort: 'created', // 排序 (选项：created 按最新；answer 按热议)
       page: 1, // 当前页码
       limit: 20, // 限制20
-      catalog: '', // 帖子分类
+      column: '', // 帖子分类
       current: '', // 当前的选项
-      isEnd: false, // 数据是否请求完毕
-      lists: [{
-        uid: {
-          name: 'mu66',
-          isVip: 1
-        },
-        title: '大前端666',
-        content: '12345...',
-        created: '2022-06-14 13:26:00',
-        catalog: 'ask',
-        fav: 40,
-        isEnd: 0,
-        reads: 99,
-        answer: 66,
-        status: 0,
-        isTop: 0, // 是否置顶
-        tags: [{
-          name: '精华',
-          class: 'layui-bg-orange'
-        }, {
-          name: '热门',
-          class: 'layui-bg-red'
-        }]
-      }] // 数据列表
+      isOver: false, // 数据是否请求完毕
+      isRepeat: false, // 是否重复请求
+      lists: [ // 数据列表
+        // { // 模拟数据列表
+        //   uid: {
+        //     username: 'mu66',
+        //     isVip: 1
+        //   },
+        //   tid: '630c67fb4a7be2e4ee0d4492',
+        //   title: '测试标题',
+        //   content: '大前端666...',
+        //   created: '2022-06-14 13:26:00',
+        //   column: 'ask',
+        //   integral: 20,
+        //   isEnd: 0,
+        //   reads: 99,
+        //   answer: 66,
+        //   status: 0,
+        //   isTop: 0, // 是否置顶
+        //   tags: [{
+        //     name: '精华',
+        //     class: 'layui-bg-orange'
+        //   }, {
+        //     name: '热门',
+        //     class: 'layui-bg-red'
+        //   }]
+        // }
+      ]
     }
   },
   // 监视数据
   watch: {
     current (newVal, oldVal) {
+      // 去监听current标签是否有变化，如果有变化，则需要重新进行查询
       console.log('current:', newVal, oldVal)
       this.init()
     },
     '$route' (newVal, oldVal) {
+      // 监听路由变化
       console.log('$route:', newVal, oldVal)
-      // const catalog = this.$route.params.catalog
-      const catalog = newVal.params.catalog
-      console.log('帖子分类', catalog)
-      if (typeof catalog !== 'undefined' && catalog !== '') {
-        this.catalog = catalog
+      // const column = this.$route.params.column
+      const column = newVal.params.column
+      console.log('帖子分类', column)
+      if (typeof column !== 'undefined' && column !== '') {
+        this.column = column
       }
       this.init()
     }
@@ -123,16 +129,20 @@ export default {
     init () {
       this.lists = []
       this.page = 0
-      this.isEnd = false
+      this.isOver = false
       this._getList()
     },
     // 获取数据列表
     _getList () {
+      // 是否重复请求
+      if (this.isRepeat) return
       // 数据是否请求完毕
-      if (this.isEnd) return
+      if (this.isOver) return
+      // 加入一个请求锁，防止用户多次点击，等待数据返回后，再打开
+      this.isRepeat = true
 
       const options = {
-        catalog: this.catalog,
+        column: this.column,
         isTop: 0, // 是否置顶
         page: this.page,
         limit: this.limit,
@@ -141,13 +151,16 @@ export default {
         status: this.status
       }
 
-      getList(options)
+      getPostList(options)
         .then(res => {
-          console.log('数据请求成功 ==> ', res)
+          // 解开请求锁
+          this.isRepeat = false
+
           if (res.code === 200) {
+            console.log('数据请求成功 ==> ', res)
             // 判断是否是最后一页
             if (res.data.length < this.limit) {
-              this.isEnd = true
+              this.isOver = true
             }
             // 如果不存在
             if (this.lists.length === 0) {
@@ -157,6 +170,11 @@ export default {
               this.lists = this.lists.concat(res.data)
             }
           }
+        })
+        .catch(err => {
+          // 解开请求锁
+          this.isRepeat = false
+          if (err) this.$pop({ msg: err.message })
         })
     },
     nextPage () {

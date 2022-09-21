@@ -339,12 +339,12 @@ export default {
     sign () {
       console.log('点击了签到')
       if (!this.isLogin) {
-        return this.$pop('请先登录！', 'shake')
+        return this.$pop({ msg: '请先登录！', type: 'shake' })
       }
       userSign().then(res => {
         const { userInfo } = this.$store.state
         if (res.code === 200) {
-          this.$pop('签到成功！')
+          this.$pop({ msg: '签到成功！' })
           this.isSign = true
           userInfo.isSign = true
           userInfo.lastSign = res.lastSign
@@ -353,7 +353,7 @@ export default {
           // 保存到 vuex
           this.$store.commit('setUserInfo', userInfo)
         } else {
-          this.$pop('今天已经签到过了！')
+          this.$pop({ msg: '今天已经签到过了！' })
         }
       })
     }
@@ -392,7 +392,7 @@ export default {
 .fly-signin {
   cite {
     padding: 0 5px;
-    color: var(--orange);
+    color: var(--danger);
     font-style: normal;
   }
 
@@ -435,7 +435,7 @@ export default {
     }
   }
   .warn {
-    color: var(--orange);
+    color: var(--danger);
   }
 }
 
@@ -462,7 +462,7 @@ export default {
     .user_info {
       margin-left: 8px;
       .name {
-        color: var(--orange);
+        color: var(--danger);
         font-size: 16px;
       }
       .time,
@@ -473,7 +473,7 @@ export default {
         i {
           margin: 0 3px;
           font-size: 16px;
-          color: var(--orange);
+          color: var(--danger);
         }
       }
     }

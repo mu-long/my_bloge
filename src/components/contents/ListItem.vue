@@ -5,68 +5,68 @@
         v-for="(item, index) in listArr"
         :key="'item' + index"
       >
-        <a
-          href="user/home.html"
-          class="fly-avatar"
-        >
-          <img
-            src="https://tva1.sinaimg.cn/crop.0.0.118.118.180/5db11ff4gw1e77d3nqrv8j203b03cweg.jpg"
-            alt="贤心"
-          >
-        </a>
-        <h2>
-          <a class="layui-badge">{{ item.catalog }}</a>
-          <a href>{{ item.title }}</a>
-        </h2>
-        <div class="fly-list-info">
+        <router-link :to="{name: 'postDetail', params: {tid: item._id}}">
           <a
-            href="user/home.html"
-            link
+            href="javascript:;"
+            class="fly-avatar"
           >
-            <!-- 用户名 -->
-            <cite>{{ item.uid.name }}</cite>
-            <i
-              class="iconfont icon-vrenzhengguanli"
-              title="认证信息：XXX"
-            ></i>
-            <!-- vip -->
-            <i
-              class="layui-badge fly-badge-vip"
-              v-if="item.uid.isVip === 1"
-            >{{ 'VIP' + item.uid.isVip }}</i>
+            <img :src="item.uid.pic">
           </a>
-          <!-- 创建时间 -->
-          <span>{{ item.created | moment }}</span>
-          <span
-            class="fly-list-kiss layui-hide-xs"
-            title="悬赏飞吻"
+          <h2>
+            <a class="layui-badge">{{ item.column }}</a>
+            <a href>{{ item.title }}</a>
+          </h2>
+          <div class="fly-list-info">
+            <a
+              href="javascript:;"
+              link
+            >
+              <!-- 用户名 -->
+              <cite>{{ item.uid.username }}</cite>
+              <i
+                class="iconfont icon-vrenzhengguanli"
+                title="已认证"
+              ></i>
+              <!-- vip -->
+              <i
+                class="layui-badge fly-badge-vip"
+                v-if="item.uid.isVip !== 0"
+              >{{ 'VIP' + item.uid.isVip }}</i>
+            </a>
+            <!-- 创建时间 -->
+            <span>{{ item.created | formattingTime }}</span>
+            <span
+              class="fly-list-kiss layui-hide-xs"
+              title="悬赏飞吻"
+            >
+              <!-- 用户积分 -->
+              <i class="iconfont icon-shoucang1"></i> {{ item.integral }}
+            </span>
+            <!-- 是否结帖 -->
+            <span
+              class="layui-badge fly-badge-accept layui-hide-xs"
+              v-show="item.status !== 0"
+            >已结</span>
+            <span
+              class="fly-list-nums"
+              title="回复量"
+            >
+              <i class="iconfont icon-taolunqu"></i>{{ item.answer }}
+            </span>
+          </div>
+          <!-- 标签 -->
+          <div
+            class="fly-list-badge"
+            v-show="item.tags.length > 0 && item.tags[0].name !==''"
           >
-            <!-- 用户积分 -->
-            <i class="iconfont icon-shoucang1"></i> {{ item.fav }}
-          </span>
-          <!-- 是否结帖 -->
-          <span
-            class="layui-badge fly-badge-accept layui-hide-xs"
-            v-show="item.status !== 0"
-          >已结</span>
-          <span class="fly-list-nums">
-            <i
-              class="layui-icon layui-icon-dialogue"
-              title="回答"
-            ></i>{{ item.answer }}
-          </span>
-        </div>
-        <div
-          class="fly-list-badge"
-          v-show="item.tags.length > 0"
-        >
-          <!-- <span class="layui-badge layui-bg-black">置顶</span> -->
-          <span
-            v-for="(tag, index) in item.tags"
-            :key="'item' + index"
-            :class="['layui-badge', tag.class]"
-          >{{ tag.name }}</span>
-        </div>
+            <!-- <span class="layui-badge layui-bg-black">置顶</span> -->
+            <span
+              v-for="(tag, index) in item.tags"
+              :key="'item' + index"
+              :class="['layui-badge', tag.class]"
+            >{{ tag.name }}</span>
+          </div>
+        </router-link>
       </li>
     </ul>
     <!-- 更多 -->
@@ -76,7 +76,7 @@
     >
       <div
         class="laypage-main"
-        v-if="!isEnd"
+        v-if="!isOver"
       >
         <a
           href
@@ -95,8 +95,6 @@
 </template>
 
 <script>
-import moment from 'moment'
-import 'moment/locale/zh-cn'
 export default {
   name: 'ListItem',
   props: {
@@ -108,7 +106,7 @@ export default {
       default: true,
       type: Boolean
     },
-    isEnd: {
+    isOver: {
       default: false,
       type: Boolean
     }
@@ -119,42 +117,31 @@ export default {
         return
       }
       this.lists.map(item => {
-        // catalog帖子分类
-        switch (item.catalog) {
+        // column帖子分类
+        switch (item.column) {
           case 'ask':
-            item.catalog = '提问'
+            item.column = '提问'
             break
           case 'share':
-            item.catalog = '分享'
+            item.column = '分享'
             break
           case 'logs':
-            item.catalog = '动态'
+            item.column = '动态'
             break
-          case 'noyice':
-            item.catalog = '公告'
+          case 'notice':
+            item.column = '公告'
             break
           case 'advise':
-            item.catalog = '建议'
+            item.column = '建议'
             break
           case 'discuss':
-            item.catalog = '交流'
+            item.column = '讨论'
             break
           // default:
           //   break;
         }
       })
       return this.lists
-    }
-  },
-  filters: {
-    moment (date) {
-      // 超过7天，显示日期
-      if (moment(date).isBefore(moment().subtract(7, 'days'))) {
-        return moment(date).format('YYYY-MM-DD')
-      } else {
-        // 显示 几秒前 几分前 几天前
-        return moment(date).from(moment())
-      }
     }
   },
   methods: {

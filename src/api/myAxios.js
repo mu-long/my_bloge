@@ -1,5 +1,4 @@
 import { baseURL, publicPath } from '@/config'
-import vue from '@/main'
 import axios from 'axios'
 // 进度条
 import NProgress from 'nprogress'
@@ -96,6 +95,8 @@ instance.interceptors.response.use(
     // console.log('响应错误:', error)
     // 全局捕获处理错误
     if (err && err.response) {
+      console.log('全局捕获处理错误 ==> ', err)
+
       switch (err.response.status) {
         case 400:
           err.message = '请求错误(400)'
@@ -134,9 +135,12 @@ instance.interceptors.response.use(
           err.message = `连接出错(${err.response.status})!`
       }
     } else {
+      console.log('err.message ==>', err)
+      // 如果是拦截重复请求 不报错
+      if (err.message === '取消重复请求！') return
       err.message = '连接服务器失败!'
     }
-    vue.$pop(err.message)
+    // vue.$pop({ msg: err.message })
 
     return Promise.reject(err)
   }

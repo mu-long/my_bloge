@@ -62,6 +62,14 @@ const Accounts = () =>
   )
 const AddPost = () =>
   import(/* webpackChunkname: "addPost" */ '../components/contents/AddPost.vue')
+const EditPost = () =>
+  import(
+    /* webpackChunkname: "editPost" */ '../components/contents/EditPost.vue'
+  )
+const PostDetail = () =>
+  import(
+    /* webpackChunkname: "postDetail" */ '../components/contents/PostDetail.vue'
+  )
 
 Vue.use(VueRouter)
 
@@ -117,6 +125,45 @@ const routes = [
     path: '/addPost',
     name: 'addPost', // 新增帖子
     component: AddPost
+  },
+  {
+    path: '/editPost/:tid',
+    name: 'editPost', // 编辑帖子
+    component: EditPost,
+    beforeEnter(to, from, next) {
+      // console.log('编辑帖子 to ==> ', to)
+      // console.log('编辑帖子 from ==> ', from)
+      // console.log('编辑帖子 next ==> ', next)
+      const fromArr = ['postDetail', 'my_post']
+      // 正常编辑帖子的情况
+      if (
+        to.params.post &&
+        to.params.post.isEnd === 0 &&
+        fromArr.indexOf(from.name) !== -1
+      ) {
+        next()
+      } else {
+        // debugger
+        // 用户在edit页面刷新的情况
+        const editPostData = localStorage.getItem('editPostData')
+
+        if (editPostData && editPostData !== '') {
+          const editObj = JSON.parse(editPostData)
+          if (editObj.isEnd === 0) {
+            next()
+          } else {
+            next('/')
+          }
+        } else {
+          next('/')
+        }
+      }
+    }
+  },
+  {
+    path: '/postDetail/:tid',
+    name: 'postDetail', // 帖子详情
+    component: PostDetail
   },
   {
     // path: '/myHome/:id',
@@ -214,11 +261,11 @@ router.beforeEach((to, from, next) => {
   if (to.matched.some(record => record.meta.requiresAuth)) {
     // console.log('to, from, next ==> ', to, from, next)
     const isLogin = store.state.isLogin
-    // console.log('isLogin==>', isLogin)
+    console.log('isLogin==>', isLogin)
     const token = store.state.token
     // 获取包装的有效签名，不需要保密的私钥
     const decoded = jwt.decode(token)
-    // console.log('解码==>', decoded)
+    console.log('解码==>', decoded)
     if (!decoded) {
       return next('/')
     }
@@ -226,9 +273,10 @@ router.beforeEach((to, from, next) => {
       '登录是否过期 ==>',
       !moment().isBefore(moment(decoded.exp * 1000))
     )
-    // 如果当前时间 不在过期时间之前 清空登录信息
-    if (!moment().isBefore(moment(decoded.exp * 1000))) {
+    // 如果当前时间 不在过期时间之前 或者没有登录 清空登录信息
+    if (!moment().isBefore(moment(decoded.exp * 1000)) || !isLogin) {
       console.log('登录过期...！')
+      window.vue.$pop({ msg: '登录已过期！请重新登录...' })
       store.commit('setUserInfo', '')
       store.commit('setToken', '')
       store.commit('setIsLogin', false)

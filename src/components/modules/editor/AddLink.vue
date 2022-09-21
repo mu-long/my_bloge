@@ -82,13 +82,13 @@ export default {
       if (this.linkTitle === '') {
         // 输入框 获取焦点
         document.getElementById('linkTitle').focus()
-        this.$pop('请输入链接标题', 'shake')
+        this.$pop({ msg: '请输入链接标题', type: 'shake' })
         return
       }
       if (this.linkUrl === '') {
         // 输入框 获取焦点
         document.getElementById('linkUrl').focus()
-        this.$pop('请输入合法的链接', 'shake')
+        this.$pop({ msg: '请输入合法的链接', type: 'shake' })
         return
       }
       this.$emit('addLinkEvent', {

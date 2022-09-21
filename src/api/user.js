@@ -27,6 +27,31 @@ const uploadImg = formData => myAxios.post('/user/upload_img', formData)
 // 新增帖子
 const addPost = data => myAxios.post('/user/add_post', data)
 
+// 编辑帖子
+const editPost = data => myAxios.post('/user/edit_post', data)
+
+// 文章点赞
+const setLikePost = data => myAxios.post('/user/likePost', { ...data })
+
+// 文章收藏
+const setCollectPost = data => myAxios.post('/user/collectPost', { ...data })
+
+// 获取用户文章列表
+const getPostListByUid = data =>
+  myAxios.get('/user/postList?' + qs.stringify(data))
+
+// 删除帖子
+const deletePostByUid = data =>
+  myAxios.get('/user/deletePost?' + qs.stringify(data))
+
+// 获取收藏的帖子
+const getPostCollect = data =>
+  myAxios.get('/user/getPostCollect?' + qs.stringify(data))
+
+// 删除收藏的帖子
+const deletePostCollect = data =>
+  myAxios.get('/user/deletePostCollect?' + qs.stringify(data))
+
 export {
   userSign,
   updateUserInfo,
@@ -34,5 +59,12 @@ export {
   updateEmail,
   resetPwd,
   uploadImg,
-  addPost
+  addPost,
+  editPost,
+  setLikePost,
+  setCollectPost,
+  getPostListByUid,
+  deletePostByUid,
+  getPostCollect,
+  deletePostCollect
 }

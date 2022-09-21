@@ -85,7 +85,7 @@ export default {
       margin: 40px 0;
       font-size: 20px;
       b {
-        color: var(--orange);
+        color: var(--danger);
       }
     }
 

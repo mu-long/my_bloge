@@ -58,7 +58,7 @@ export default {
       await uploadImg(formData).then((res) => {
         if (res.code === 200) {
           console.log('上传图片 ==> ', res)
-          this.$pop('图片上传成功！')
+          this.$pop({ msg: '图片上传成功！' })
 
           const baseurl =
             process.env.NODE_ENV === 'production'
@@ -79,7 +79,7 @@ export default {
           // 清空input信息，方便下次选择
           document.getElementById('pic').value = ''
         } else {
-          this.$pop('图片上传失败！')
+          this.$pop({ msg: '图片上传失败！' })
         }
       })
     }

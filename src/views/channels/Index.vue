@@ -31,7 +31,7 @@ import Tips from '@/components/sidebar/Tips.vue'
 export default {
   name: 'channels-index', // channels 通道
   components: {
-    List, // 普通老板
+    List, // 普通列表
     Top, // 置顶
     HotList, // 热门列表
     Ads, // 广告

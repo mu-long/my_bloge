@@ -187,7 +187,7 @@ export default {
         return
       }
 
-      login({
+      await login({
         email: this.email,
         password: this.password,
         code: this.code,

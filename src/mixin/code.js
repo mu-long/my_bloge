@@ -14,21 +14,23 @@ export default {
     }
   },
   mounted() {
-    // 获取验证码唯一标识
-    if (!this.sid) {
-      const sid = getSid()
-      this.sid = sid
-      console.log('sid==>', sid)
-      // this.$store.commit('setSid', sid)
-    }
-
-    this._getCaptcha(this.sid)
+    this._getCaptcha()
   },
   methods: {
     // 获取验证码
-    _getCaptcha(sid) {
+    async _getCaptcha(sid = this.sid) {
+      // 初始化内容
+      this.code = ''
+      // 获取验证码唯一标识
+      if (this.sid === '') {
+        const sid = getSid()
+        this.sid = sid
+        // this.$store.commit('setSid', sid)
+      }
+      console.log('sid==>', sid)
+
       // let sid = this.$store.state.sid
-      getCaptcha(sid).then(res => {
+      await getCaptcha(sid).then(res => {
         console.log(res)
         if (res.code === 200) {
           this.svg = res.data
