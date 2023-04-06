@@ -857,7 +857,7 @@ export default {
       const { isLogin, userInfo } = await this.$store.state
       if (!isLogin) return this.$pop({ msg: '登录后，即可发表评论！', type: 'shake' })
       // 用户禁言状态判断
-      if (userInfo.states !== 0) return this.$pop({ msg: '您已被禁言，请联系管理员...', type: 'shake' })
+      if (userInfo.status !== 0) return this.$pop({ msg: '您已被禁言，请联系管理员...', type: 'shake' })
 
       if (this.replyText === '') return this.$pop({ msg: '评论内容不能为空！', type: 'shake' })
       if (this.code === '') return this.$pop({ msg: '请填写验证码！', type: 'shake' })

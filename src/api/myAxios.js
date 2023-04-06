@@ -1,9 +1,11 @@
-import { baseURL, publicPath } from '@/config'
+import configFile from '@/config'
 import axios from 'axios'
 // 进度条
 import NProgress from 'nprogress'
 import 'nprogress/nprogress.css'
 import store from '../store'
+
+const { baseURL, publicPath } = configFile
 
 // 定义取消请求令牌
 const CancelToken = axios.CancelToken

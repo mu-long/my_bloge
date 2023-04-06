@@ -1,14 +1,21 @@
 <template>
   <div class="user_center">
-    <div class="msg">你好，admin，你已经是我们的正式会员！</div>
+    <div
+      class="msg"
+      v-if="userInfo.isVip === 1"
+    >你好，{{ userInfo.username }}，你已经是我们的正式会员！</div>
+    <div
+      class="msg"
+      v-else
+    >你好，{{ userInfo.username }}！</div>
     <div class="layui-row">
       <div class="layui-col-md5 border vip_box">
         <div class="panel">
           <div class="title">我的会员信息：</div>
           <div class="content">
-            <p>你的积分有：<b>{{favs}}</b></p>
-            <p v-if="isVip === 1">您当前为：<b>VIP用户</b></p>
+            <p v-if="userInfo.isVip === 1">您当前为：<b>VIP用户</b></p>
             <p v-else>您当前为：非VIP用户</p>
+            <p>积分余额：<b>{{ userInfo.favs }}</b></p>
           </div>
         </div>
       </div>
@@ -40,14 +47,13 @@
 </template>
 
 <script>
+import { getUserInfo } from '@/api/user'
 import Sign from '../sidebar/Sign.vue'
 
 export default {
   name: 'user_center', // 用户中心
   data () {
     return {
-      favs: this.$store.state.userInfo.favs || 0,
-      isVip: this.$store.state.userInfo.isVip || 0,
       lnkArr: [
         {
           icon: 'icon-shezhi',
@@ -101,8 +107,28 @@ export default {
       ]
     }
   },
+  computed: {
+    userInfo () {
+      return this.$store.state.userInfo
+    }
+  },
   components: {
     Sign
+  },
+  mounted () {
+    this.get_userInfo()
+  },
+  methods: {
+    async get_userInfo () {
+      await getUserInfo({
+        uid: this.userInfo._id
+      }).then(res => {
+        if (res.code === 200) {
+          // 保存用户信息到vuex
+          this.$store.commit('setUserInfo', res.data)
+        }
+      })
+    }
   }
 }
 </script>

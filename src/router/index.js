@@ -130,7 +130,7 @@ const routes = [
     path: '/editPost/:tid',
     name: 'editPost', // 编辑帖子
     component: EditPost,
-    beforeEnter(to, from, next) {
+    beforeEnter (to, from, next) {
       // console.log('编辑帖子 to ==> ', to)
       // console.log('编辑帖子 from ==> ', from)
       // console.log('编辑帖子 next ==> ', next)
@@ -257,38 +257,61 @@ const router = new VueRouter({
 
 // 全局路由守卫
 router.beforeEach((to, from, next) => {
+  // console.log('to, from, next ==> ', to, from, next)
   console.log('路由守卫...')
-  if (to.matched.some(record => record.meta.requiresAuth)) {
-    // console.log('to, from, next ==> ', to, from, next)
-    const isLogin = store.state.isLogin
-    console.log('isLogin==>', isLogin)
-    const token = store.state.token
+
+  const userInfo = JSON.parse(localStorage.getItem('userInfo'))
+  const token = localStorage.getItem('token')
+
+  if (token) {
     // 获取包装的有效签名，不需要保密的私钥
     const decoded = jwt.decode(token)
     console.log('解码==>', decoded)
-    if (!decoded) {
-      return next('/')
-    }
-    console.log(
-      '登录是否过期 ==>',
-      !moment().isBefore(moment(decoded.exp * 1000))
-    )
-    // 如果当前时间 不在过期时间之前 或者没有登录 清空登录信息
-    if (!moment().isBefore(moment(decoded.exp * 1000)) || !isLogin) {
+
+    // 判断登录是否过期
+    if (decoded && moment().isBefore(moment(decoded.exp * 1000))) {
+      console.log(
+        '登录是否过期 ==>',
+        !moment().isBefore(moment(decoded.exp * 1000))
+      )
+      // 取localStorage里面缓存的token信息 + 用户信息
+      // 8-24小时， refresh token 1个月
+      store.commit('setToken', token)
+      store.commit('setUserInfo', userInfo)
+      store.commit('setIsLogin', true)
+
+      // 初始化webscoekt服务
+      console.log('store.state.ws ==>', store.state.ws)
+      if (!store.state.ws) {
+        console.log('初始化webscoekt服务 store.state.ws ==>', store.state.ws)
+        store.commit('initWebSocket', {})
+      }
+    } else {
+      // 如果当前时间 不在过期时间之前 或者没有登录 清空登录信息
       console.log('登录过期...！')
       window.vue.$pop({ msg: '登录已过期！请重新登录...' })
-      store.commit('setUserInfo', '')
-      store.commit('setToken', '')
-      store.commit('setIsLogin', false)
+
       localStorage.clear()
-      return next('/login')
+      next('/login')
+      setTimeout(() => {
+        window.location.reload()
+      }, 500)
+      // return
     }
+  }
+
+  if (to.matched.some(record => record.meta.requiresAuth)) {
+    const isLogin = store.state.isLogin
+    console.log('isLogin ==>', isLogin)
+
     if (isLogin) {
       next()
     } else {
+      // 未登录的状态
       next('/login')
     }
   } else {
+    // 公共页面，不需要用户登录
     next()
   }
 })

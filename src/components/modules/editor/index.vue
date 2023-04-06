@@ -313,44 +313,6 @@ export default {
 <style lang="scss" scoped>
 @import '@/css/layuiReset.scss';
 
-// 出现
-@keyframes appear {
-  0% {
-    opacity: 0;
-    transform: scale(0.5);
-  }
-  100% {
-    opacity: 1;
-    transform: scale(1);
-  }
-}
-// 消失
-@keyframes disappear {
-  0% {
-    opacity: 1;
-    transform: scale(1);
-  }
-  50% {
-    opacity: 0.5;
-    transform: scale(1.05);
-  }
-  100% {
-    opacity: 0;
-    transform: scale(0.5);
-  }
-}
-
-/*
-  v-enter-active 【入场动画的时间段】
-  v-leave-active 【离场动画的时间段】
-*/
-.v-enter-active {
-  animation: appear 0.3s;
-}
-.v-leave-active {
-  animation: disappear 0.3s;
-}
-
 .editor_wrap {
   position: relative;
 }

@@ -4,6 +4,10 @@ import myAxios from './myAxios'
 // 用户签到
 const userSign = () => myAxios.get('/user/fav')
 
+// 获取用户基本信息
+const getUserInfo = data =>
+  myAxios.get('/public/user_info?' + qs.stringify(data))
+
 // 更新用户基本资料
 const updateUserInfo = data => myAxios.post('/user/basic', data)
 
@@ -52,8 +56,15 @@ const getPostCollect = data =>
 const deletePostCollect = data =>
   myAxios.get('/user/deletePostCollect?' + qs.stringify(data))
 
+// 获取用户未读消息
+const getMsg = data => myAxios.get('/user/getmsg?' + qs.stringify(data))
+
+// 设置用户未读消息
+const setMsg = data => myAxios.get('/user/setmsg?' + qs.stringify(data))
+
 export {
   userSign,
+  getUserInfo,
   updateUserInfo,
   updatepwd,
   updateEmail,
@@ -66,5 +77,7 @@ export {
   getPostListByUid,
   deletePostByUid,
   getPostCollect,
-  deletePostCollect
+  deletePostCollect,
+  getMsg,
+  setMsg
 }

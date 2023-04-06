@@ -1,5 +1,5 @@
 <template>
-  <transition>
+  <transition name="fade">
     <div
       v-show="isShow"
       class="layui-layer-tips layui-edit-face edit-content"

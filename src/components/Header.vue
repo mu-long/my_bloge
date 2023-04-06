@@ -38,6 +38,22 @@
             @mouseenter='mouse_enter()'
             @mouseleave='mouse_out()'
           >
+            <!-- 消息提示 -->
+            <div
+              class="fly-nav-msg"
+              v-show="num.message && num.message !== 0"
+            >{{ num.message }}</div>
+            <transition name="fade">
+              <div
+                class="layui-layer-tips"
+                v-show="hasMsg"
+              >
+                <div class="layui-layer-content">
+                  <span>您有{{ num.message }}条未读消息</span>
+                  <i class="layui-layer-TipsG layui-layer-TipsB"></i>
+                </div>
+              </div>
+            </transition>
             <a
               href="javascript:;"
               class="fly-nav-avatar"
@@ -108,15 +124,39 @@
 </template>
 
 <script>
+import { mapState } from 'vuex'
+
 export default {
   name: 'Header',
   data () {
     return {
       isShowMenu: false,
-      hoverCtrl: {} // 存放定时器
+      hoverCtrl: {}, // 存放定时器
+      hasMsg: false // 是否有消息
+    }
+  },
+  watch: {
+    num (newVal, oldVal) {
+      // console.log('newVal, oldVal ==> ', newVal, oldVal)
+      if (newVal.event && newVal.message !== oldVal.message) {
+        // 判断消息数量，决定是否显示消息提示框
+        if (newVal.message && newVal.message > 0) {
+          this.hasMsg = true
+          setTimeout(() => {
+            this.hasMsg = false
+          }, 2000)
+        }
+      }
     }
   },
   computed: {
+    ...mapState({
+      num: state => state.num
+    }),
+    // 相当于 ==>
+    // num () {
+    //   return this.$store.state.num
+    // },
     isShow () {
       return this.$store.state.isLogin || false
     },
@@ -230,9 +270,30 @@ header {
     .fly-nav-user {
       justify-self: center;
 
-      // .userInfo_box:hover{
+      .fly-nav-msg {
+        position: absolute;
+        top: 50%;
+        left: -18px;
+        height: 20px;
+        line-height: 20px;
+        margin-top: -10px;
+        padding: 0 6px;
+        background-color: #ff7200;
+        color: #fff;
+        border-radius: 2px;
 
-      // }
+        &:hover {
+          color: #fff;
+        }
+      }
+
+      .layui-layer-tips {
+        position: absolute;
+        white-space: nowrap;
+        right: 38px;
+        top: 50px;
+        z-index: 9999;
+      }
 
       .layui-nav-bar {
         display: none !important;

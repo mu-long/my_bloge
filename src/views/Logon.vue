@@ -194,7 +194,7 @@ export default {
   },
   components: {},
   mounted () {
-    window.vue = this
+    // window.vue = this
     if (!this.sid) {
       const sid = getSid()
       this.sid = sid

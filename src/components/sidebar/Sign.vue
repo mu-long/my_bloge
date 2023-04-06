@@ -280,7 +280,20 @@ export default {
       ]
     }
   },
+  watch: {
+    userInfo (newVal, oldVal) {
+      if (newVal.isSign === true) {
+        // this.nextSign()
+        this.isSign = true
+      } else {
+        this.isSign = false
+      }
+    }
+  },
   computed: {
+    userInfo () {
+      return this.$store.state.userInfo
+    },
     // 连续签到天数
     count () {
       const { userInfo } = this.$store.state

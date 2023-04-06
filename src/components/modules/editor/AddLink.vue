@@ -1,5 +1,5 @@
 <template>
-  <transition>
+  <transition name="fade">
     <div
       v-show="isShow"
       class="layui-layer-page layui-layer-prompt edit-content"
